@@ -125,6 +125,9 @@ getText x = case x of
 getText foo
 -- "foo" : String
 
+-- das Selbe in grün
+getText2 (_, x) = x
+
 -- prefix notation
 (,,,) 2 "foo" 5 "bar"
 ```
