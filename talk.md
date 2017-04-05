@@ -1,24 +1,24 @@
 ---
-title: Elm 101
+title: Introduction to Elm
 separator: <!--s-->
 verticalSeparator: <!--v-->
 theme: white
 highlightTheme: solarized-light
 ---
-# Elm 101
+# Introduction to Elm
 
-Stefan Siegl (<stesie@brokenpipe.de>)
+Stefan Siegl (<stefan.siegl@mayflower.de>)
 
 <!--s-->
-# Wer hat schon einmal ...?
+# Wer hat schon einmal was mit ... gemacht?
 
 <!--v-->
-## ... was mit React/Redux gemacht?
+## ... React/Redux?
 
-... Typescript?
+... in Verbindung mit Typescript?
 
 <!--v-->
-## ... was mit Haskell gemacht?
+## ... Haskell?
 
 ... oder Standard ML?
 
@@ -48,6 +48,17 @@ Nope! Elm ist leichter zu lernen
 * eager evaluation
 
 <!--s-->
+
+# Mitmachen!?
+
+```console
+$ npm -g install elm
+$ elm repl
+```
+
+oder online: http://elm-lang.org/try
+
+<!--s-->
 # Syntax
 
 ## Kommentare
@@ -73,8 +84,8 @@ Nope! Elm ist leichter zu lernen
 2 ^ 3
 ```
 
-<!--v-->
-## Datentypen
+<!--s-->
+# Datentypen
 
 ## Literale
 ```elm
@@ -189,30 +200,24 @@ add 5 (mul 2 2)
 ```
 
 <!--v-->
-## Exkurs Haskell: Dollar Operator
-
-```haskell
-let add x y = x + y
-let mul x y = x * y
-
-add 5 $ mul 2 2
-```
-
-<!--v-->
 ## Pipe Operator
 
 ... so wie in F#
 
 ```elm
 add 5 (mul 2 2)
-
 add 5 <| mul 2 2
-
 mul 2 2 |> add 5
 ```
 
-<!--s-->
-# Function Composition
+Äquivalent in Haskell: *Dollar Operator*
+
+```haskell
+add 5 $ mul 2 2
+```
+
+<!--v-->
+## Function Composition
 
 ```elm
 -- > (>>)
@@ -245,7 +250,7 @@ type MyMaybe a = MyJust a | MyNothing
 foo = MyJust 5
 -- MyJust 5 : MyMaybe number
 
-extract = case foo of
+extract foo = case foo of
   MyMaybe x -> x
   MyNothing -> 23
 
@@ -292,4 +297,79 @@ List.filter (\x -> x % 2 == 0) [ 1, 2, 3, 4 ]
 -- [2,4] : List Int
 ```
 
+<!--s-->
 
+Syntax ist ja schön und gut ...
+
+# aber so richtig jetzt!?
+
+<!--v-->
+## Hello World!
+
+```elm
+import Html exposing (..)
+
+main = h1 [] [ text "Hello World" ]
+```
+
+<!--v-->
+## Seiteneffekte FTW
+
+* Elm ist *purely functional*
+* ... und der Code, den man schreibt, ist das auch
+* alle Seiteneffekte passieren in der Runtime (!!)
+
+<!--v-->
+## die Elm-Architektur
+
+ein einfaches Programm (Html.beginnerProgram) stellt drei Methoden bereit:
+
+* model : Model
+* update : Msg -> Model -> Model
+* view : Model -> Html Msg
+
+... und definiert die Typen *Model* und *Msg*
+
+*main* sieht dann einfach so aus:
+
+```elm
+main =
+  Html.beginnerProgram { model = model, view = view, update = update }
+```
+
+<!--v-->
+## XmlHttpRequest
+
+* aus `Html.beginnerProgram` wird `Html.program`
+* *init* und *update* erhalten den Rückgabetyp `(Model, Cmd Msg)`
+* neben einem neuen Model können sie also einen Befehl absetzen (den die Runtime dann umsetzt)
+* zum Zerlegen von Results (z.B. JSON) gibt es dann verschiedene Decoder (die Typsicherheit zur Laufzeit gewährleisten)
+
+<!--v-->
+
+Request senden
+
+```elm
+type Msg = HandleResult (Result Http.Error String)
+Decode.at ["data", "image_url"] Decode.string
+  |> Http.getString "https://api.giphy.com/..." 
+  |> Http.send HandleResult
+```
+Result verarbeiten
+
+```elm
+update msg model =
+  case msg of
+    HandleResult (Ok content) -> ...
+    HandleResult (Err _) -> ...
+```
+
+Beispiel: http://elm-lang.org/examples/http
+
+<!--s-->
+# Resourcen
+
+* https://guide.elm-lang.org/
+* https://www.elm-tutorial.org/en/
+
+* http://package.elm-lang.org/
