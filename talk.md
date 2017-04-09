@@ -49,6 +49,7 @@ Nope! Elm will einfach sein, und ist es auch
 * keine "higher kinded types"
 * keine "type classes"
 * kein Überladen von Funktionen
+* klarere Syntax
 * eager evaluation
 
 <!--s-->
@@ -101,108 +102,19 @@ the 3rd.
 </div>
 
 <!--s-->
-# Syntax
-
-## Kommentare
-
-```elm
--- einzelne Zeile
-
-{-
-   mehrzeilig
--}
-```
-
-<!--v-->
-## Rechenoperationen
-
-```elm
-2 + 3
-2 - 3
-2 * 3
-2 / 3   -- float
-2 // 3  -- int
-2 % 3   -- modulo
-2 ^ 3
-```
-
-<!--s-->
 # Datentypen
 
-## Literale
-```elm
-True : Bool
-False : Bool
-
-42 : number -- Typ für Int oder Float
-3.14 : Float
-
-'a' : Char
-"foo" : String
-
-"""
-multi line
-string with quotes "
-"""
-```
-
 <!--v-->
-## Listen
 
-der Haskell-Doppelpunkt wurde in Elm verdoppelt :-)
-
-```elm
--- alle gleichbedeutend, Typ: List number
-[ 1, 2, 3 ]
-
-1 :: [ 2, 3 ]
-
-1 :: 2 :: [ 3 ]
-
-1 :: 2 :: 3 :: []
-```
-
-<!--v-->
-## Tuple
-
-```elm
-(2, 3)
-
--- auch verschiedene Typen
-foo = (23, "foo")
-
-getText x = case x of
-  (_, x) -> x
--- <function> : ( a, b ) -> b
-
-getText foo
--- "foo" : String
-
--- das Selbe in grün
-getText2 (_, x) = x
-
--- prefix notation
-(,,,) 2 "foo" 5 "bar"
-```
-
-<!--v-->
-## Records
-
-```elm
-p = { x = 2, y = 4 }
-
-p.x
--- 2 : number
-
-.x p
--- 2 : number
-
-List.map .x [p]
--- [2] : List number
-
-p2 = { p | x = 5 }
--- { x = 5, y = 4 }
-```
+| type         | Beispiel                      |
+|--------------|-------------------------------|
+| Int          | 42                            |
+| Float        | 3.14                          |
+| Char         | 'a'                           |
+| String       | "Hallo"                       |
+| List a       | [ 5, 23, 42 ]                 |
+| Tuple        | ("Rolf", 33)                  |
+| Record       | { name = "Rolf", age = 33 }   |
 
 <!--v-->
 ## Funktionen
@@ -220,6 +132,39 @@ incr2 = (\x -> x + 2)
 incr2 3
 -- 5 : number
 ```
+
+<!--v-->
+## Aliases
+
+```elm
+type alias Point =
+  { x: Int
+  , y: Int
+  }
+```
+
+<!--s-->
+# Union Types
+
+```elm
+type MyMaybe a = MyJust a | MyNothing
+
+foo : MyMaybe Int
+foo = MyJust 5
+
+extract : MyMaybe Int -> Int
+extract x = case x of
+  MyJust y -> y
+  MyNothing -> 23
+
+extract foo
+-- 5 : number
+
+extract MyNothing
+-- 23 : number
+```
+
+
 
 <!--v-->
 ## Partial Function Application
@@ -244,25 +189,17 @@ add 5 (mul 2 2)
 <!--v-->
 ## Pipe Operator
 
-... so wie in F#
-
 ```elm
 add 5 (mul 2 2)
 add 5 <| mul 2 2
 mul 2 2 |> add 5
 ```
 
-Äquivalent in Haskell: *Dollar Operator*
-
-```haskell
-add 5 $ mul 2 2
-```
-
 <!--v-->
 ## Function Composition
 
 ```elm
--- > (>>)
+-- (>>)
 -- <function> : (a -> b) -> (b -> c) -> a -> c
 
 add2 = (+) 2
@@ -278,59 +215,21 @@ mul2 = (*) 2
 Äquivalent in der Gegenrichtung
 
 ```elm
--- > (<<)
+-- (<<)
 -- <function> : (b -> c) -> (a -> b) -> a -> c
 ```
-
-
-<!--s-->
-# Algebraic Data Types
-
-```elm
-type MyMaybe a = MyJust a | MyNothing
-
-foo = MyJust 5
--- MyJust 5 : MyMaybe number
-
-extract foo = case foo of
-  MyMaybe x -> x
-  MyNothing -> 23
-
-extract foo
--- 5 : number
-
-extract MyNothing
--- 23 : number
-```
-
-<!--v-->
-## type alias
-
-```elm
-type alias Point = { x: Int, y: Int }
-
-p1 = Point 2 3
-p2 = Point 2 3
-
-p1 == p2
--- True : Bool
-```
-
-*aber*: Vergleich geht immer auf die Datenstruktur, kann auch nicht überschreiben werden!
 
 <!--v-->
 ## keine Type Classes!
 
 Ausweg: equality selbst implementieren und `eq` nennen
 ```elm
-eq : Point -> Point -> Bool
-eq x y = x.x == y.x
+Point.eq : Point -> Point -> Bool
+Point.eq x y = x.x == y.x
 
-eq p1 p2
+Point.eq p1 p2
 -- True : Bool
 ```
-
-... und dann nicht global, sondern "namespaced"
 
 * das Gleiche gilt für `filter`, `map` et al
 
