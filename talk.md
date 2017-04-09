@@ -12,51 +12,44 @@ Stefan Siegl (<stefan.siegl@mayflower.de>)
 <!--s-->
 # Wer hat schon einmal was mit ... gemacht?
 
-<!--v-->
-## ... React/Redux?
-
-... in Verbindung mit Typescript?
-
-<!--v-->
-## ... Haskell?
-
-... oder Standard ML?
-
+* React & Redux?
+* Typescript?
+* Haskell?
 
 <!--s-->
 # Was ist Elm?
 
 * eine Programmiersprache, speziell (nur) für JavaScript Frontend Applikationen
-* ... kompiliert zu JavaScript Code
-* purely functional (kein Ausweg über `as any` et al)
-* Belohnung: nie wieder *undefined is not a function*
-* Syntax ähnlich Haskell
-* Typsystem von Standard ML
-* Architekturmodell wie React/Redux
-* Immutable data structures
-* ein sehr freundlicher/hilfsbereiter Compiler
+* relativ jung: 2012 von Evan Czaplicki
+* kompiliert zu JavaScript Code
+* Fokus auf Einfachheit
+* Fokus auf Reaktivität
 
 <!--v-->
+# Warum Elm?
 
+* sehr freundlicher, hilfsbereiter Compiler
+* nie wieder *undefined is not a function*
+* gute Performance
+
+<!--v-->
+## Was macht Elm aus?
+
+* funktional
+* pure functions
+* statisch getyped
+* immutable data structures
+* Syntax von Haskell
+
+<!--v-->
 ## Haskell!?  ich muss weg ...
 
-Nope! Elm ist leichter zu lernen
+Nope! Elm will einfach sein, und ist es auch
 
-* keine Applicatives, Monaden
-* keine Type Classes
+* keine "higher kinded types"
+* keine "type classes"
 * kein Überladen von Funktionen
 * eager evaluation
-
-<!--s-->
-
-# Mitmachen!?
-
-```console
-$ npm -g install elm
-$ elm repl
-```
-
-oder online: http://elm-lang.org/try
 
 <!--s-->
 # Syntax
