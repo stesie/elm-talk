@@ -52,6 +52,55 @@ Nope! Elm will einfach sein, und ist es auch
 * eager evaluation
 
 <!--s-->
+# Compiler? Hilfsbereit!?
+
+<!--v-->
+
+<div style="display: block; white-space: pre; padding: 2em; text-align: left; font-size: 50%; font-family: monospace">Detected errors in 1 module.
+<span style="color: rgb(0, 168, 198);">
+
+-- NAMING ERROR ----------------------------------------------------------------</span>
+<span style="color: rgb(213, 32, 12);"></span>
+Cannot find variable `List.fold`.
+<span style="color: rgb(213, 32, 12);"></span>
+<span style="color: rgb(154, 154, 154);">7|</span> <span style="color: rgb(154, 154, 154);">sum = List.fold (+) 0</span>
+<span style="color: rgb(213, 32, 12);">         ^^^^^^^^^</span>
+`List` does not expose `fold`. Maybe you want one of the following?
+<span style="color: rgb(213, 32, 12);"></span>
+<span style="color: rgb(154, 154, 154);">    List.foldl</span>
+<span style="color: rgb(154, 154, 154);">    List.foldr</span>
+<span style="color: rgb(213, 32, 12);"></span>
+<span style="color: rgb(213, 32, 12);"></span>
+</div>
+
+<!--v-->
+
+<div style="display: block; white-space: pre; padding: 2em; text-align: left; font-size: 50%; font-family: monospace">Detected errors in 1 module.
+<span style="color: rgb(0, 168, 198);">
+
+-- TYPE MISMATCH ---------------------------------------------------------------</span>
+<span style="color: rgb(213, 32, 12);"></span>
+The 3rd argument to function `foldl` is causing a mismatch.
+<span style="color: rgb(213, 32, 12);"></span>
+<span style="color: rgb(154, 154, 154);">8|</span> <span style="color: rgb(154, 154, 154);">      List.foldl (+) 0 strings</span>
+<span style="color: rgb(213, 32, 12);">                          ^^^^^^^</span>
+Function `foldl` is expecting the 3rd argument to be:
+<span style="color: rgb(213, 32, 12);"></span>
+<span style="color: rgb(154, 154, 154);">    List number</span>
+<span style="color: rgb(213, 32, 12);"></span>
+But it is:
+<span style="color: rgb(213, 32, 12);"></span>
+<span style="color: rgb(154, 154, 154);">    List String</span>
+<span style="color: rgb(213, 32, 12);"></span>
+<u>Hint:</u> I always figure out the type of arguments from left to right. If an
+argument is acceptable when I check it, I assume it is "correct" in subsequent
+checks. So the problem may actually be in how previous arguments interact with
+the 3rd.
+<span style="color: rgb(213, 32, 12);"></span>
+<span style="color: rgb(213, 32, 12);"></span>
+</div>
+
+<!--s-->
 # Syntax
 
 ## Kommentare
