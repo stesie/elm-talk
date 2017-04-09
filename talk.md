@@ -253,7 +253,7 @@ import Html exposing (..)
 main = h1 [] [ text "Hello World" ]
 ```
 
-<!--v-->
+<!--s-->
 ## Seiteneffekte FTW
 
 * Elm ist *purely functional*
@@ -325,37 +325,118 @@ view model = div []
   ]
 ```
 
+<!--s-->
+# Commands & Subscriptions
 
-
-
-<!--v-->
-## XmlHttpRequest
-
-* aus `Html.beginnerProgram` wird `Html.program`
-* *init* und *update* erhalten den Rückgabetyp `(Model, Cmd Msg)`
-* neben einem neuen Model können sie also einen Befehl absetzen (den die Runtime dann umsetzt)
-* zum Zerlegen von Results (z.B. JSON) gibt es dann verschiedene Decoder (die Typsicherheit zur Laufzeit gewährleisten)
+* Command: der Elm-Code soll initial oder "on update" mit der Außenwelt interagieren
+* Subscription: auf Seiteneffekte von außen reagieren
+  * Zeit (tick every ...)
+  * eingehende WebSocket Nachrichten
 
 <!--v-->
+## Commands
 
-Request senden
+* Beispiele: Random, HTTP Requests, WebSocket Verbindung + Nachrichten senden
+* Methoden `init` und `update` geben nicht mehr nur Model zurück,
+  sondern zusätzlich ein Kommando
+
+<!--s-->
+# Beispiel Commands
+
+Darzustellende Liste von extern per XmlHttpRequest beziehen
+
+<!--v-->
+## Aufbau JSON-Struktur
+
+```json
+{
+  "resource": [
+    {
+      "id": 1,
+      "name": "Management"
+    },
+    {
+      "id": 2,
+      "name": "Team"
+    },
+    {
+      "id": 3,
+      "name": "Product Owner"
+    },
+    {
+      "id": 4,
+      "name": "Scrum Master"
+    },
+    {
+      "id": 5,
+      "name": "Prozess"
+    }
+  ]
+}
+```
+
+<!--v-->
+## Step 0: Model
 
 ```elm
-type Msg = HandleResult (Result Http.Error String)
-Decode.at ["data", "image_url"] Decode.string
-  |> Http.getString "https://api.giphy.com/..." 
-  |> Http.send HandleResult
+-- model
+
+type alias Model =
+  { categories : Maybe (List String)
+  }
 ```
-Result verarbeiten
+
+<!--v-->
+## Step 1: Update
+
+```
+-- update
+type Msg = NewData (Result Http.Error (List String))
+
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model = case msg of
+  NewData (Err _) -> (model, Cmd.none)
+  NewData (Ok newCategories)
+    -> (Model <| Just newCategories, Cmd.none)
+```
+
+<!--v-->
+## Step 2: type-safe JSON
+
+JSON Struktur muss in type-safe Welt übertragen werden, dazu wird ein Decoder verwendet:
 
 ```elm
-update msg model =
-  case msg of
-    HandleResult (Ok content) -> ...
-    HandleResult (Err _) -> ...
+import Json.Decode as Decode
+
+decodeCategoryList: Decode.Decoder (List String)
+decodeCategoryList = 
+  Decode.field "resource"
+    <| Decode.list
+    <| Decode.field "name" Decode.string
 ```
 
-Beispiel: http://elm-lang.org/examples/http
+<!--v-->
+## Step 3: Command erzeugen
+
+... dieser Decoder kann dann verwendet werden, um einen HTTP Request zu senden
+und die Response zu decodieren:
+
+```elm
+fetchCategoryList: Cmd Msg
+fetchCategoryList =
+  decodeCategoryList
+    |> Http.get "https://df.brokenpipe.de/api/v2/db/_table/category?api_key=..."
+    |> Http.send NewData
+```
+
+<!--v-->
+## Step 4: Feuer frei!
+
+```elm
+init : (Model, Cmd Msg)
+init =
+  (Model Nothing, fetchCategoryList)
+```
 
 <!--s-->
 # Resourcen
