@@ -263,20 +263,70 @@ main = h1 [] [ text "Hello World" ]
 <!--v-->
 ## die Elm-Architektur
 
-ein einfaches Programm (Html.beginnerProgram) stellt drei Methoden bereit:
-
-* model : Model
-* update : Msg -> Model -> Model
-* view : Model -> Html Msg
-
-... und definiert die Typen *Model* und *Msg*
-
-*main* sieht dann einfach so aus:
+ein einfaches Programm stellt drei Funktionen bereit:
 
 ```elm
-main =
-  Html.beginnerProgram { model = model, view = view, update = update }
+model : Model
+
+update : Msg -> Model -> Model
+
+view : Model -> Html Msg
 ```
+
+... und definiert die Typen `Model` und `Msg`
+
+<!--s-->
+# Beispiel
+
+einfacher Counter mit Reset
+
+<!--v-->
+
+```elm
+-- model
+
+type alias Model =
+  { counter : Int
+  }
+
+model : Model
+model = 
+  { counter = 0
+  }
+```  
+
+<!--v-->
+
+```elm
+-- update
+
+type Msg = Increment | Reset
+
+update : Msg -> Model -> Model
+update msg model = case msg of
+  Increment -> { model | counter = model.counter + 1 }
+  Reset -> { model | counter = 0 }
+```
+
+<!--v-->
+
+```elm
+-- view
+
+view : Model -> Html Msg
+view model = div []
+  [ h1 [] [ text "Toller Zähler" ]
+  , div [] 
+    [ span [] [ text "aktueller Stand: " ]
+    , span [] [ toString model.counter ]
+    ]
+  , button [ onClick Increment ] [ text "+" ]
+  , button [ onClick Reset ] [ text "Reset!" ]
+  ]
+```
+
+
+
 
 <!--v-->
 ## XmlHttpRequest
