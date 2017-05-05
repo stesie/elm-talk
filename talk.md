@@ -29,11 +29,17 @@ Stefan Siegl (<stefan.siegl@mayflower.de>)
 * eine Programmiersprache, speziell (nur) für JavaScript Frontend Applikationen
 * ... kompiliert zu JavaScript Code
 * purely functional (kein Ausweg über `as any` et al)
-* Belohnung: nie wieder *undefined is not a function*
 * Syntax ähnlich Haskell
 * Typsystem von Standard ML
 * Architekturmodell wie React/Redux
 * Immutable data structures
+
+<!--v-->
+## Belohnung?
+
+* Belohnung: nie wieder *undefined is not a function*
+* Performance
+* enforced semver on packages
 * ein sehr freundlicher/hilfsbereiter Compiler
 
 <!--v-->
