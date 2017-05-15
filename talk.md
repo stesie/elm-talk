@@ -74,6 +74,10 @@ Cannot find variable `List.fold`.
 <span style="color: rgb(213, 32, 12);"></span>
 </div>
 
+Note:
+
+Der Compiler macht bei Vertippern in Funktionsnamen Vorschläge, was man vielleicht gemeint haben könnte.
+
 <!--v-->
 
 <div style="display: block; white-space: pre; padding: 2em; text-align: left; font-size: 50%; font-family: monospace">Detected errors in 1 module.
@@ -101,6 +105,11 @@ the 3rd.
 <span style="color: rgb(213, 32, 12);"></span>
 </div>
 
+Note:
+
+* bei Typ-Fehlern wird angegeben, welcher Typ erwartet wurde und was man tatsächlich geliefert hat
+* und der Compiler redet von sich in der Ich-Form :-)
+
 <!--v-->
 
 <div style="display: block; white-space: pre; padding: 2em; text-align: left; font-size: 50%; font-family: monospace">Detected errors in 1 module.
@@ -126,6 +135,11 @@ The recommendations about wildcard patterns and `Debug.crash` are important!
 <span style="color: rgb(213, 32, 12);"></span>
 </div>
 
+Note:
+
+Der Compiler setzt durch, dass alle Funktionen total sind.  Wenn Fehlerfälle o.ä.
+nicht implementiert werden, wird zur Compile-Zeit ein Fehler geworfen.
+
 <!--v-->
 
 * alle Funktionen sind total!
@@ -143,6 +157,12 @@ List.head []
 List.head [23, 42]
 -- Just 23
 ```
+
+Note:
+
+* die gesamte Standardbibliothek ist so aufgebaut, dass keine Exceptions benötigt werden
+* statt dessen wird in allen Fällen, in denen Probleme auftreten können `Maybe` oder `Result` Typen zurückgegeben
+* `Result` hat zwei "Slots", ein Typ für den Fehlerfall (`Err`) und einen Erfolgsfall `Ok`
 
 
 <!--s-->
@@ -385,7 +405,7 @@ view model = div []
   sondern zusätzlich ein Kommando
 
 <!--s-->
-# Beispiel Commands
+# Beispiel
 
 Darzustellende Liste von extern per XmlHttpRequest beziehen
 
