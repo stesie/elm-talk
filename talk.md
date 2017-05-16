@@ -13,6 +13,7 @@ Note:
 
 Wer hat schon einmal was mit ... gemacht?
 
+* Elm?
 * React & Redux?
 * Typescript?
 * Haskell?
@@ -27,21 +28,41 @@ Wer hat schon einmal was mit ... gemacht?
 * Fokus auf Einfachheit
 * Fokus auf Reaktivität
 
+Note:
+
+* Evan Czaplicki hat Elm im Rahmen seiner Doktorarbeit entwickelt
+
+<!--v-->
+# Wer nutzt das?
+
+* Prezi
+* NoRedInk
+* CircuitHub
+...?
+
+Note:
+
+* Evan war ab 2013 bei Prezi und ist seit 2016 bei NoRedInk
+* Richard Feldman ist ist ebenfalls bei NoRedInk
+* aktuelle Version 0.18
+* alles noch in recht frühem Stadium ...
+
 <!--v-->
 # Warum Elm?
 
 * sehr freundlicher, hilfsbereiter Compiler
 * nie wieder *undefined is not a function*
 * gute Performance
+* leichte Testbarkeit
 
 <!--v-->
 ## Was macht Elm aus?
 
-* funktional
-* pure functions
+* (purely) functional
 * statisch getyped
 * immutable data structures
 * Syntax von Haskell
+* package repo, das semver durchsetzt
 
 <!--v-->
 ## Haskell!?  ich muss weg ...
@@ -511,3 +532,14 @@ init =
 * https://www.elm-tutorial.org/en/
 
 * http://package.elm-lang.org/
+
+<!--v-->
+# Fragen?
+
+<!--v-->
+
+Mail: stefan.siegl@mayflower.de
+
+Twitter: @stesie23
+
+Slides: https://stesie.github.io/elm-talk/
