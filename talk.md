@@ -76,6 +76,10 @@ Cannot find variable `List.fold`.
 <span style="color: rgb(213, 32, 12);"></span>
 </div>
 
+Note:
+
+Der Compiler macht bei Vertippern in Funktionsnamen Vorschläge, was man vielleicht gemeint haben könnte.
+
 <!--v-->
 
 <div style="display: block; white-space: pre; padding: 2em; text-align: left; font-size: 50%; font-family: monospace">Detected errors in 1 module.
@@ -102,6 +106,66 @@ the 3rd.
 <span style="color: rgb(213, 32, 12);"></span>
 <span style="color: rgb(213, 32, 12);"></span>
 </div>
+
+Note:
+
+* bei Typ-Fehlern wird angegeben, welcher Typ erwartet wurde und was man tatsächlich geliefert hat
+* und der Compiler redet von sich in der Ich-Form :-)
+
+<!--v-->
+
+<div style="display: block; white-space: pre; padding: 2em; text-align: left; font-size: 50%; font-family: monospace">Detected errors in 1 module.
+<span style="color: rgb(0, 168, 198);">
+
+-- MISSING PATTERNS ------------------------------------------------------------</span>
+<span style="color: rgb(213, 32, 12);"></span>
+This `case` does not have branches for all possibilities.
+<span style="color: rgb(213, 32, 12);"></span>
+<span style="color: rgb(154, 154, 154);">5|</span><span style="color: rgb(213, 32, 12);">&gt;</span><span style="color: rgb(154, 154, 154);">        case x of</span>
+<span style="color: rgb(154, 154, 154);">6|</span><span style="color: rgb(213, 32, 12);">&gt;</span><span style="color: rgb(154, 154, 154);">  Just y -&gt; y</span>
+<span style="color: rgb(213, 32, 12);"></span>
+You need to account for the following values:
+<span style="color: rgb(213, 32, 12);"></span>
+<span style="color: rgb(154, 154, 154);">    Maybe.Nothing</span>
+<span style="color: rgb(213, 32, 12);"></span>
+Add a branch to cover this pattern!
+<span style="color: rgb(213, 32, 12);"></span>
+If you are seeing this error for the first time, check out these hints:
+&lt;https://github.com/elm-lang/elm-compiler/blob/0.18.0/hints/missing-patterns.md&gt;
+The recommendations about wildcard patterns and `Debug.crash` are important!
+<span style="color: rgb(213, 32, 12);"></span>
+<span style="color: rgb(213, 32, 12);"></span>
+</div>
+
+Note:
+
+Der Compiler setzt durch, dass alle Funktionen total sind.  Wenn Fehlerfälle o.ä.
+nicht implementiert werden, wird zur Compile-Zeit ein Fehler geworfen.
+
+<!--v-->
+
+* alle Funktionen sind total!
+* keine try/catch Konstrukte
+* ... das gilt auch für die Core Library, z.B.
+
+```elm
+List.head : List a -> Maybe.Maybe a
+```
+
+```elm
+List.head []
+-- Nothing
+
+List.head [23, 42]
+-- Just 23
+```
+
+Note:
+
+* die gesamte Standardbibliothek ist so aufgebaut, dass keine Exceptions benötigt werden
+* statt dessen wird in allen Fällen, in denen Probleme auftreten können `Maybe` oder `Result` Typen zurückgegeben
+* `Result` hat zwei "Slots", ein Typ für den Fehlerfall (`Err`) und einen Erfolgsfall `Ok`
+
 
 <!--s-->
 # Datentypen
@@ -343,7 +407,7 @@ view model = div []
   sondern zusätzlich ein Kommando
 
 <!--s-->
-# Beispiel Commands
+# Beispiel
 
 Darzustellende Liste von extern per XmlHttpRequest beziehen
 
