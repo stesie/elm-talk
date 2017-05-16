@@ -2,8 +2,6 @@
 title: Introduction to Elm
 separator: <!--s-->
 verticalSeparator: <!--v-->
-theme: white
-highlightTheme: solarized-light
 ---
 # Introduction to Elm
 
