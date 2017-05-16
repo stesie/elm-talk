@@ -9,8 +9,9 @@ highlightTheme: solarized-light
 
 Stefan Siegl (<stefan.siegl@mayflower.de>)
 
-<!--s-->
-# Wer hat schon einmal was mit ... gemacht?
+Note:
+
+Wer hat schon einmal was mit ... gemacht?
 
 * React & Redux?
 * Typescript?
@@ -19,7 +20,8 @@ Stefan Siegl (<stefan.siegl@mayflower.de>)
 <!--s-->
 # Was ist Elm?
 
-* eine Programmiersprache, speziell (nur) für JavaScript Frontend Applikationen
+* funktionale Programmiersprache
+* Fokus auf JavaScript SPAs & Komponenten
 * relativ jung: 2012 von Evan Czaplicki
 * kompiliert zu JavaScript Code
 * Fokus auf Einfachheit
