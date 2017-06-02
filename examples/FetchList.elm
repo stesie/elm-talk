@@ -48,7 +48,7 @@ renderCategoryList categories = case categories of
 fetchCategoryList: Cmd Msg
 fetchCategoryList =
   decodeCategoryList
-    |> Http.get "https://df.brokenpipe.de/api/v2/db/_table/category?api_key=d115b8db49336532f6ae2b09cde208e49541d6823db33a92c6dceccaabf3b5a2"
+    |> Http.get "categories.json"
     |> Http.send NewData
 
 decodeCategoryList: Decode.Decoder (List String)
