@@ -9,7 +9,7 @@ Stefan Siegl (<stefan.siegl@mayflower.de>)
 
 Note:
 
-Wer hat schon einmal was mit ... gemacht?
+Who of you has already used ..?
 
 * Elm?
 * React & Redux?
@@ -17,64 +17,65 @@ Wer hat schon einmal was mit ... gemacht?
 * Haskell?
 
 <!--s-->
-# Was ist Elm?
+# What's Elm?
 
-* funktionale Programmiersprache
-* Fokus auf JavaScript SPAs & Komponenten
-* relativ jung: 2012 von Evan Czaplicki
-* kompiliert zu JavaScript Code
-* Fokus auf Einfachheit
-* Fokus auf Reaktivität
+* functional programming language
+* focus on SPAs & components
+* compiles to JavaScript code
+* relatively young: 2012 by Evan Czaplicki
+* focus on simplicity
+* focus on reactivity
 
 Note:
 
-* Evan Czaplicki hat Elm im Rahmen seiner Doktorarbeit entwickelt
+* Evan Czaplicki developed Elm for his PhD thesis
 
 <!--v-->
-# Wer nutzt das?
+# Who's using it?
 
 * Prezi
 * NoRedInk
+* Microsoft
+* Mozilla
 * CircuitHub
 ...?
 
 Note:
 
-* Evan war ab 2013 bei Prezi und ist seit 2016 bei NoRedInk
-* Richard Feldman ist ist ebenfalls bei NoRedInk
-* aktuelle Version 0.18
-* alles noch in recht frühem Stadium ...
+* Evan was employed at Prezi beginning in 2013 and is with NoRedInk since 2016
+* Richard Feldman also works at NoRedInk
+* current version is 0.18
 
 <!--v-->
-# Warum Elm?
+# Why Elm?
 
-* sehr freundlicher, hilfsbereiter Compiler
-* nie wieder *undefined is not a function*
-* gute Performance
-* leichte Testbarkeit
+* very friendly & helpful compiler
+* no more *undefined is not a function*
+* good performance
+* easily testable
 
 <!--v-->
-## Was macht Elm aus?
+## What is Elm like?
 
 * (purely) functional
-* statisch getyped
+* statically typed
 * immutable data structures
-* Syntax von Haskell
-* package repo, das semver durchsetzt
+* syntax of ML/Haskell
+* package repo, enforcing semver
 
 <!--v-->
-## Haskell!?  ich muss weg ...
+## Haskell!? gotta leave ...
 
-Nope! Elm will einfach sein, und ist es auch
+Nope! Elm strives for simplicity and easy entry
 
-* keine "higher kinded types"
-* keine "type classes"
-* kein Überladen von Funktionen
-* klarere Syntax
+* no "higher kinded types"
+* no "type classes"
+* no overloaded functions
+* clearer syntax
 * eager evaluation
 
 <!--s-->
-# Compiler? Hilfsbereit!?
+# Compiler? Helpful!?
 
 <!--v-->
 
@@ -97,7 +98,7 @@ Cannot find variable `List.fold`.
 
 Note:
 
-Der Compiler macht bei Vertippern in Funktionsnamen Vorschläge, was man vielleicht gemeint haben könnte.
+The compiler makes suggestions for typos, what you might have meant ...
 
 <!--v-->
 
@@ -128,8 +129,8 @@ the 3rd.
 
 Note:
 
-* bei Typ-Fehlern wird angegeben, welcher Typ erwartet wurde und was man tatsächlich geliefert hat
-* und der Compiler redet von sich in der Ich-Form :-)
+* for typ mismatches it shows what type was expected (and why) and what you actually provided
+* compiler is speaking of itself in 1st person form :-)
 
 <!--v-->
 
@@ -158,14 +159,15 @@ The recommendations about wildcard patterns and `Debug.crash` are important!
 
 Note:
 
-Der Compiler setzt durch, dass alle Funktionen total sind.  Wenn Fehlerfälle o.ä.
-nicht implementiert werden, wird zur Compile-Zeit ein Fehler geworfen.
+The compiler enforces that all functions are total.  If compiler notices, that
+e.g. a error branch wasn't implemented, then it bails out during compilation
+(and not at runtime).
 
 <!--v-->
 
-* alle Funktionen sind total!
-* keine try/catch Konstrukte
-* ... das gilt auch für die Core Library, z.B.
+* all functions are total
+* no try/catch constructs
+* ... this also is true for the standard library
 
 ```elm
 List.head : List a -> Maybe.Maybe a
@@ -181,9 +183,9 @@ List.head [23, 42]
 
 Note:
 
-* die gesamte Standardbibliothek ist so aufgebaut, dass keine Exceptions benötigt werden
-* statt dessen wird in allen Fällen, in denen Probleme auftreten können `Maybe` oder `Result` Typen zurückgegeben
-* `Result` hat zwei "Slots", ein Typ für den Fehlerfall (`Err`) und einen Erfolgsfall `Ok`
+* the whole standard library is built in a way that doesn't need exceptions
+* instead it returns `Maybe` or `Result` types
+* `Result` has two constructors, one for errors and one for okayish
 
 
 <!--s-->
@@ -238,7 +240,7 @@ type alias Model =
   }
 
 model : Model
-model = 
+model =
   { counter = 0
   }
 ```  
@@ -264,7 +266,7 @@ update msg model = case msg of
 view : Model -> Html Msg
 view model = div []
   [ h1 [] [ text "Toller Zähler" ]
-  , div [] 
+  , div []
     [ span [] [ text "aktueller Stand: " ]
     , span [] [ text <| toString model.counter ]
     ]
@@ -357,7 +359,7 @@ JSON Struktur muss in type-safe Welt übertragen werden, dazu wird ein Decoder v
 import Json.Decode as Decode
 
 decodeCategoryList: Decode.Decoder (List String)
-decodeCategoryList = 
+decodeCategoryList =
   Decode.field "resource"
     <| Decode.list
     <| Decode.field "name" Decode.string
