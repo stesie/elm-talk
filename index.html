@@ -17,7 +17,7 @@
 
 Stefan Siegl (<stefan.siegl@mayflower.de>)
 
-<aside class="notes"><p>Wer hat schon einmal was mit ... gemacht?</p>
+<aside class="notes"><p>Who of you has already used ..?</p>
 <ul>
 <li>Elm?</li>
 <li>React &amp; Redux?</li>
@@ -25,62 +25,65 @@ Stefan Siegl (<stefan.siegl@mayflower.de>)
 <li>Haskell?</li>
 </ul>
 </aside></script></section><section ><section data-markdown><script type="text/template">
-# Was ist Elm?
+# What's Elm?
 
-* funktionale Programmiersprache
-* Fokus auf JavaScript SPAs & Komponenten
-* relativ jung: 2012 von Evan Czaplicki
-* kompiliert zu JavaScript Code
-* Fokus auf Einfachheit
-* Fokus auf Reaktivität
+* functional programming language
+* focus on SPAs & components
+* compiles to JavaScript code
+* relatively young: 2012 by Evan Czaplicki
+* focus on simplicity
+* focus on reactivity
 
 <aside class="notes"><ul>
-<li>Evan Czaplicki hat Elm im Rahmen seiner Doktorarbeit entwickelt</li>
+<li>Evan Czaplicki developed Elm for his PhD thesis</li>
 </ul>
 </aside></script></section><section data-markdown><script type="text/template">
-# Wer nutzt das?
+# Who's using it?
 
 * Prezi
 * NoRedInk
+* Pivotal Tracker
+* Day One
+* Microsoft
+* Mozilla
 * CircuitHub
 ...?
 
 <aside class="notes"><ul>
-<li>Evan war ab 2013 bei Prezi und ist seit 2016 bei NoRedInk</li>
-<li>Richard Feldman ist ist ebenfalls bei NoRedInk</li>
-<li>aktuelle Version 0.18</li>
-<li>alles noch in recht frühem Stadium ...</li>
+<li>Evan was employed at Prezi beginning in 2013 and is with NoRedInk since 2016</li>
+<li>Richard Feldman also works at NoRedInk</li>
+<li>current version is 0.18</li>
 </ul>
 </aside></script></section><section data-markdown><script type="text/template">
-# Warum Elm?
+# Why Elm?
 
-* sehr freundlicher, hilfsbereiter Compiler
-* nie wieder *undefined is not a function*
-* gute Performance
-* leichte Testbarkeit
+* very friendly & helpful compiler
+* no more *undefined is not a function*
+* good performance
+* easily testable
 
 </script></section><section data-markdown><script type="text/template">
-## Was macht Elm aus?
+## What is Elm like?
 
 * (purely) functional
-* statisch getyped
+* statically typed
 * immutable data structures
-* Syntax von Haskell
-* package repo, das semver durchsetzt
+* syntax of ML/Haskell
+* package repo, enforcing semver
 
 </script></section><section data-markdown><script type="text/template">
-## Haskell!?  ich muss weg ...
+## Haskell!? gotta leave ...
 
-Nope! Elm will einfach sein, und ist es auch
+Nope! Elm strives for simplicity and easy entry
 
-* keine "higher kinded types"
-* keine "type classes"
-* kein Überladen von Funktionen
-* klarere Syntax
+* no "higher kinded types"
+* no "type classes"
+* no overloaded functions
+* clearer syntax
 * eager evaluation
 
 </script></section></section><section ><section data-markdown><script type="text/template">
-# Compiler? Hilfsbereit!?
+# Compiler? Helpful!?
 
 </script></section><section data-markdown><script type="text/template">
 
@@ -101,7 +104,7 @@ Cannot find variable `List.fold`.
 <span style="color: rgb(213, 32, 12);"></span>
 </div>
 
-<aside class="notes"><p>Der Compiler macht bei Vertippern in Funktionsnamen Vorschläge, was man vielleicht gemeint haben könnte.</p>
+<aside class="notes"><p>The compiler makes suggestions for typos, what you might have meant ...</p>
 </aside></script></section><section data-markdown><script type="text/template">
 
 <div style="display: block; white-space: pre; padding: 2em; text-align: left; font-size: 50%; font-family: monospace">Detected errors in 1 module.
@@ -130,8 +133,8 @@ the 3rd.
 </div>
 
 <aside class="notes"><ul>
-<li>bei Typ-Fehlern wird angegeben, welcher Typ erwartet wurde und was man tatsächlich geliefert hat</li>
-<li>und der Compiler redet von sich in der Ich-Form :-)</li>
+<li>for typ mismatches it shows what type was expected (and why) and what you actually provided</li>
+<li>compiler is speaking of itself in 1st person form :-)</li>
 </ul>
 </aside></script></section><section data-markdown><script type="text/template">
 
@@ -158,13 +161,14 @@ The recommendations about wildcard patterns and `Debug.crash` are important!
 <span style="color: rgb(213, 32, 12);"></span>
 </div>
 
-<aside class="notes"><p>Der Compiler setzt durch, dass alle Funktionen total sind.  Wenn Fehlerfälle o.ä.
-nicht implementiert werden, wird zur Compile-Zeit ein Fehler geworfen.</p>
+<aside class="notes"><p>The compiler enforces that all functions are total.  If compiler notices, that
+e.g. a error branch wasn&#39;t implemented, then it bails out during compilation
+(and not at runtime).</p>
 </aside></script></section><section data-markdown><script type="text/template">
 
-* alle Funktionen sind total!
-* keine try/catch Konstrukte
-* ... das gilt auch für die Core Library, z.B.
+* all functions are total
+* no try/catch constructs
+* ... this also is true for the standard library
 
 ```elm
 List.head : List a -> Maybe.Maybe a
@@ -179,152 +183,15 @@ List.head [23, 42]
 ```
 
 <aside class="notes"><ul>
-<li>die gesamte Standardbibliothek ist so aufgebaut, dass keine Exceptions benötigt werden</li>
-<li>statt dessen wird in allen Fällen, in denen Probleme auftreten können <code>Maybe</code> oder <code>Result</code> Typen zurückgegeben</li>
-<li><code>Result</code> hat zwei &quot;Slots&quot;, ein Typ für den Fehlerfall (<code>Err</code>) und einen Erfolgsfall <code>Ok</code></li>
+<li>the whole standard library is built in a way that doesn&#39;t need exceptions</li>
+<li>instead it returns <code>Maybe</code> or <code>Result</code> types</li>
+<li><code>Result</code> has two constructors, one for errors and one for okayish</li>
 </ul>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
-# Datentypen
 
-</script></section><section data-markdown><script type="text/template">
+nice syntax, but ...
 
-| type         | Beispiel                      |
-|--------------|-------------------------------|
-| Int          | 42                            |
-| Float        | 3.14                          |
-| Char         | 'a'                           |
-| String       | "Hallo"                       |
-| List a       | [ 5, 23, 42 ]                 |
-| Tuple        | ("Rolf", 33)                  |
-| Record       | { name = "Rolf", age = 33 }   |
-
-</script></section><section data-markdown><script type="text/template">
-## Funktionen
-
-```elm
--- named function
-
-incr2 : Int -> Int
-incr2 x = x + 2
-
--- anonymous
-
-incr2 = (\x -> x + 2)
-
-incr2 3
--- 5 : number
-```
-
-</script></section><section data-markdown><script type="text/template">
-## Aliases
-
-```elm
-type alias Point =
-  { x: Int
-  , y: Int
-  }
-```
-
-</script></section></section><section ><section data-markdown><script type="text/template">
-# Union Types
-
-```elm
-type MyMaybe a = MyJust a | MyNothing
-
-foo : MyMaybe Int
-foo = MyJust 5
-
-extract : MyMaybe Int -> Int
-extract x = case x of
-  MyJust y -> y
-  MyNothing -> 23
-
-extract foo
--- 5 : number
-
-extract MyNothing
--- 23 : number
-```
-
-
-
-</script></section><section data-markdown><script type="text/template">
-## Partial Function Application
-
-```elm
-add : Int -> Int -> Int
-add x y = x + y
-
-add5 = add 5
--- <function> : number -> number
-
-add5 7
--- 12 : number
-
-mul : Int -> Int -> Int
-mul x y = x * y
-
-add 5 (mul 2 2)
--- 9 : number
-```
-
-</script></section><section data-markdown><script type="text/template">
-## Pipe Operator
-
-```elm
-add 5 (mul 2 2)
-add 5 <| mul 2 2
-mul 2 2 |> add 5
-```
-
-</script></section><section data-markdown><script type="text/template">
-## Function Composition
-
-```elm
--- (>>)
--- <function> : (a -> b) -> (b -> c) -> a -> c
-
-add2 = (+) 2
-mul2 = (*) 2
-
-(add2 >> mul2) 2
--- 8 : number
-
-(mul2 >> add2) 2
--- 6 : number
-```
-
-Äquivalent in der Gegenrichtung
-
-```elm
--- (<<)
--- <function> : (b -> c) -> (a -> b) -> a -> c
-```
-
-</script></section><section data-markdown><script type="text/template">
-## keine Type Classes!
-
-Ausweg: equality selbst implementieren und `eq` nennen
-```elm
-Point.eq : Point -> Point -> Bool
-Point.eq x y = x.x == y.x
-
-Point.eq p1 p2
--- True : Bool
-```
-
-* das Gleiche gilt für `filter`, `map` et al
-
-```elm
-List.filter (\x -> x % 2 == 0) [ 1, 2, 3, 4 ]
--- [2,4] : List Int
-```
-
-</script></section></section><section ><section data-markdown><script type="text/template">
-
-Syntax ist ja schön und gut ...
-
-# aber so richtig jetzt!?
+# what about some code?
 
 </script></section><section data-markdown><script type="text/template">
 ## Hello World!
@@ -336,16 +203,19 @@ main = h1 [] [ text "Hello World" ]
 ```
 
 </script></section></section><section ><section data-markdown><script type="text/template">
-## Seiteneffekte FTW
+## Side-Effects FTW
 
-* Elm ist *purely functional*
-* ... und der Code, den man schreibt, ist das auch
-* alle Seiteneffekte passieren in der Runtime (!!)
+* Elm is *purely functional*
+* ... and the code, you're going to write, is so too
+* all side-effects happen within the Runtime (!!)
 
 </script></section><section data-markdown><script type="text/template">
-## die Elm-Architektur
+## Elm Architecture
 
-ein einfaches Programm stellt drei Funktionen bereit:
+a simple program defines
+
+* two types: `Model` and `Msg`
+* three little functions
 
 ```elm
 model : Model
@@ -355,12 +225,10 @@ update : Msg -> Model -> Model
 view : Model -> Html Msg
 ```
 
-... und definiert die Typen `Model` und `Msg`
-
 </script></section></section><section ><section data-markdown><script type="text/template">
-# Beispiel
+# Example
 
-einfacher Counter mit Reset
+Simple Counter w/ Reset
 
 </script></section><section data-markdown><script type="text/template">
 
@@ -372,7 +240,7 @@ type alias Model =
   }
 
 model : Model
-model = 
+model =
   { counter = 0
   }
 ```  
@@ -397,9 +265,9 @@ update msg model = case msg of
 
 view : Model -> Html Msg
 view model = div []
-  [ h1 [] [ text "Toller Zähler" ]
-  , div [] 
-    [ span [] [ text "aktueller Stand: " ]
+  [ h1 [] [ text "Marvellous Counter" ]
+  , div []
+    [ span [] [ text "Current value: " ]
     , span [] [ text <| toString model.counter ]
     ]
   , button [ onClick Increment ] [ text "+" ]
@@ -410,25 +278,25 @@ view model = div []
 </script></section></section><section ><section data-markdown><script type="text/template">
 # Commands & Subscriptions
 
-* Command: der Elm-Code soll initial oder "on update" mit der Außenwelt interagieren
-* Subscription: auf Seiteneffekte von außen reagieren
-  * Zeit (tick every ...)
-  * eingehende WebSocket Nachrichten
+* Command: Elm code actively interacts with the outside world
+* Subscription: react to effects from the outside
+  * time passes by (tick every ...)
+  * incoming WebSocket messages
 
 </script></section><section data-markdown><script type="text/template">
 ## Commands
 
-* Beispiele: Random, HTTP Requests, WebSocket Verbindung + Nachrichten senden
-* Methoden `init` und `update` geben nicht mehr nur Model zurück,
-  sondern zusätzlich ein Kommando
+* e.g. Random, HTTP requests, WebSocket connection + outbound messaging
+* solution: `init` and `update` update don't just return a `Model`, but
+  a `(Model, Cmd)`
 
 </script></section></section><section ><section data-markdown><script type="text/template">
-# Beispiel
+# Example II
 
-Darzustellende Liste von extern per XmlHttpRequest beziehen
+Show a list of items retrieved by an XHR
 
 </script></section><section data-markdown><script type="text/template">
-## Aufbau JSON-Struktur
+## JSON-Structure
 
 ```json
 {
@@ -485,23 +353,18 @@ update msg model = case msg of
 </script></section><section data-markdown><script type="text/template">
 ## Step 2: type-safe JSON
 
-JSON Struktur muss in type-safe Welt übertragen werden, dazu wird ein Decoder verwendet:
-
 ```elm
 import Json.Decode as Decode
 
 decodeCategoryList: Decode.Decoder (List String)
-decodeCategoryList = 
+decodeCategoryList =
   Decode.field "resource"
     <| Decode.list
     <| Decode.field "name" Decode.string
 ```
 
 </script></section><section data-markdown><script type="text/template">
-## Step 3: Command erzeugen
-
-... dieser Decoder kann dann verwendet werden, um einen HTTP Request zu senden
-und die Response zu decodieren:
+## Step 3: Create & Send Command
 
 ```elm
 fetchCategoryList: Cmd Msg
@@ -512,7 +375,7 @@ fetchCategoryList =
 ```
 
 </script></section><section data-markdown><script type="text/template">
-## Step 4: Feuer frei!
+## Step 4: Fire!
 
 ```elm
 init : (Model, Cmd Msg)
@@ -521,7 +384,7 @@ init =
 ```
 
 </script></section></section><section ><section data-markdown><script type="text/template">
-# Resourcen
+# Resources
 
 * https://guide.elm-lang.org/
 * https://www.elm-tutorial.org/en/
@@ -529,7 +392,7 @@ init =
 * http://package.elm-lang.org/
 
 </script></section><section data-markdown><script type="text/template">
-# Fragen?
+# Questions?
 
 </script></section><section data-markdown><script type="text/template">
 
