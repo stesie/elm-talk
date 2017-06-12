@@ -35,6 +35,8 @@ Note:
 
 * Prezi
 * NoRedInk
+* Pivotal Tracker
+* Day One
 * Microsoft
 * Mozilla
 * CircuitHub
@@ -190,9 +192,9 @@ Note:
 
 <!--s-->
 
-Syntax ist ja schön und gut ...
+nice syntax, but ...
 
-# aber so richtig jetzt!?
+# what about some code?
 
 <!--v-->
 ## Hello World!
@@ -204,16 +206,19 @@ main = h1 [] [ text "Hello World" ]
 ```
 
 <!--s-->
-## Seiteneffekte FTW
+## Side-Effects FTW
 
-* Elm ist *purely functional*
-* ... und der Code, den man schreibt, ist das auch
-* alle Seiteneffekte passieren in der Runtime (!!)
+* Elm is *purely functional*
+* ... and the code, you're going to write, is so too
+* all side-effects happen within the Runtime (!!)
 
 <!--v-->
-## die Elm-Architektur
+## Elm Architecture
 
-ein einfaches Programm stellt drei Funktionen bereit:
+a simple program defines
+
+* two types: `Model` and `Msg`
+* three little functions
 
 ```elm
 model : Model
@@ -223,12 +228,10 @@ update : Msg -> Model -> Model
 view : Model -> Html Msg
 ```
 
-... und definiert die Typen `Model` und `Msg`
-
 <!--s-->
-# Beispiel
+# Example
 
-einfacher Counter mit Reset
+Simple Counter w/ Reset
 
 <!--v-->
 
@@ -265,9 +268,9 @@ update msg model = case msg of
 
 view : Model -> Html Msg
 view model = div []
-  [ h1 [] [ text "Toller Zähler" ]
+  [ h1 [] [ text "Marvellous Counter" ]
   , div []
-    [ span [] [ text "aktueller Stand: " ]
+    [ span [] [ text "Current value: " ]
     , span [] [ text <| toString model.counter ]
     ]
   , button [ onClick Increment ] [ text "+" ]
@@ -278,25 +281,25 @@ view model = div []
 <!--s-->
 # Commands & Subscriptions
 
-* Command: der Elm-Code soll initial oder "on update" mit der Außenwelt interagieren
-* Subscription: auf Seiteneffekte von außen reagieren
-  * Zeit (tick every ...)
-  * eingehende WebSocket Nachrichten
+* Command: Elm code actively interacts with the outside world
+* Subscription: react to effects from the outside
+  * time passes by (tick every ...)
+  * incoming WebSocket messages
 
 <!--v-->
 ## Commands
 
-* Beispiele: Random, HTTP Requests, WebSocket Verbindung + Nachrichten senden
-* Methoden `init` und `update` geben nicht mehr nur Model zurück,
-  sondern zusätzlich ein Kommando
+* e.g. Random, HTTP requests, WebSocket connection + outbound messaging
+* solution: `init` and `update` update don't just return a `Model`, but
+  a `(Model, Cmd)`
 
 <!--s-->
-# Beispiel
+# Example II
 
-Darzustellende Liste von extern per XmlHttpRequest beziehen
+Show a list of items retrieved by an XHR
 
 <!--v-->
-## Aufbau JSON-Struktur
+## JSON-Structure
 
 ```json
 {
@@ -353,8 +356,6 @@ update msg model = case msg of
 <!--v-->
 ## Step 2: type-safe JSON
 
-JSON Struktur muss in type-safe Welt übertragen werden, dazu wird ein Decoder verwendet:
-
 ```elm
 import Json.Decode as Decode
 
@@ -366,10 +367,7 @@ decodeCategoryList =
 ```
 
 <!--v-->
-## Step 3: Command erzeugen
-
-... dieser Decoder kann dann verwendet werden, um einen HTTP Request zu senden
-und die Response zu decodieren:
+## Step 3: Create & Send Command
 
 ```elm
 fetchCategoryList: Cmd Msg
@@ -380,7 +378,7 @@ fetchCategoryList =
 ```
 
 <!--v-->
-## Step 4: Feuer frei!
+## Step 4: Fire!
 
 ```elm
 init : (Model, Cmd Msg)
@@ -389,7 +387,7 @@ init =
 ```
 
 <!--s-->
-# Resourcen
+# Resources
 
 * https://guide.elm-lang.org/
 * https://www.elm-tutorial.org/en/
@@ -397,7 +395,7 @@ init =
 * http://package.elm-lang.org/
 
 <!--v-->
-# Fragen?
+# Questions?
 
 <!--v-->
 
