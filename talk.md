@@ -5,7 +5,9 @@ verticalSeparator: <!--v-->
 ---
 # Introduction to Elm
 
-Stefan Siegl (<stefan.siegl@mayflower.de>)
+Stefan Siegl / @stesie23
+
+aka Rolf (<rolf@mayflower.de>)
 
 Note:
 
@@ -15,6 +17,11 @@ Who of you has already used ..?
 * React & Redux?
 * Typescript?
 * Haskell?
+
+<!--s-->
+# Who am I?
+
+![Github Profile Screenshot](images/who-am-i.png)
 
 <!--s-->
 # What's Elm?
@@ -33,14 +40,7 @@ Note:
 <!--v-->
 # Who's using it?
 
-* Prezi
-* NoRedInk
-* Pivotal Tracker
-* Day One
-* Microsoft
-* Mozilla
-* CircuitHub
-...?
+![Logos of PivotalTracker, noredink, Prezi, CircuitHub etc.](images/elm-users.png)
 
 Note:
 
@@ -65,6 +65,11 @@ Note:
 * syntax of ML/Haskell
 * package repo, enforcing semver
 
+Note:
+
+* Package repo currently has ~1100 packages
+* fun stuff: enforced semver leads to higher version numbers :)
+
 <!--v-->
 ## Haskell!? gotta leave ...
 
@@ -72,7 +77,7 @@ Nope! Elm strives for simplicity and easy entry
 
 * no "higher kinded types"
 * no "type classes"
-* no overloaded functions
+* no "overloaded" functions
 * clearer syntax
 * eager evaluation
 
@@ -290,8 +295,8 @@ view model = div []
 ## Commands
 
 * e.g. Random, HTTP requests, WebSocket connection + outbound messaging
-* solution: `init` and `update` update don't just return a `Model`, but
-  a `(Model, Cmd)`
+* solution: `init` and `update` don't just return a `Model`, but
+  a `(Model, Cmd)` tupel
 
 <!--s-->
 # Example II
@@ -386,6 +391,22 @@ init =
   (Model Nothing, fetchCategoryList)
 ```
 
+<!--v-->
+## Step 5: View
+
+```elm
+view : Model -> Html Msg
+view model = div []
+  [ h1 [] [ text "Kategorie-Liste" ]
+  , renderCategoryList model.categories
+  ]
+
+renderCategoryList : Maybe (List String) -> Html Msg
+renderCategoryList categories = case categories of
+  Nothing -> span [] [ text "Daten werden geladen ..." ]
+  Just xs -> List.map (\x -> li [] [text x]) xs |> ul []
+```
+
 <!--s-->
 # Resources
 
@@ -399,7 +420,7 @@ init =
 
 <!--v-->
 
-Mail: stefan.siegl@mayflower.de
+Mail: rolf@mayflower.de
 
 Twitter: @stesie23
 
