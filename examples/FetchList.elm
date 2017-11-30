@@ -66,7 +66,7 @@ renderCategoryList categories =
             span [] [ text "Daten werden geladen ..." ]
 
         Just xs ->
-            List.map (\x -> li [] [ text x ]) xs |> ul []
+            ul [] <| List.map (\x -> li [] [ text x ]) xs
 
 
 

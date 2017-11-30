@@ -279,12 +279,18 @@ model =
 ```elm
 -- update
 
-type Msg = Increment | Reset
+type Msg
+  = Increment
+  | Reset
 
 update : Msg -> Model -> Model
-update msg model = case msg of
-  Increment -> { model | counter = model.counter + 1 }
-  Reset -> { model | counter = 0 }
+update msg model =
+  case msg of
+    Increment ->
+      { model | counter = model.counter + 1 }
+
+    Reset ->
+      { model | counter = 0 }
 ```
 
 <!--v-->
@@ -372,11 +378,14 @@ type alias Model =
 -- update
 type Msg = NewData (Result Http.Error (List String))
 
-update : Msg -> Model -> (Model, Cmd Msg)
-update msg model = case msg of
-  NewData (Err _) -> (model, Cmd.none)
-  NewData (Ok newCategories)
-    -> (Model <| Just newCategories, Cmd.none)
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+  case msg of
+    NewData (Ok newCategories) ->
+      ( Model <| Just newCategories, Cmd.none )
+
+    NewData (Err _) ->
+      ( model, Cmd.none )
 ```
 
 <!--v-->
@@ -389,7 +398,7 @@ decodeCategoryList: Decode.Decoder (List String)
 decodeCategoryList =
   Decode.field "resource"
     <| Decode.list
-    <| Decode.field "name" Decode.string
+      <| Decode.field "name" Decode.string
 ```
 
 <!--v-->
@@ -409,7 +418,7 @@ fetchCategoryList =
 ```elm
 init : (Model, Cmd Msg)
 init =
-  (Model Nothing, fetchCategoryList)
+  ( Model Nothing, fetchCategoryList )
 ```
 
 <!--v-->
@@ -423,9 +432,13 @@ view model = div []
   ]
 
 renderCategoryList : Maybe (List String) -> Html Msg
-renderCategoryList categories = case categories of
-  Nothing -> span [] [ text "Daten werden geladen ..." ]
-  Just xs -> List.map (\x -> li [] [text x]) xs |> ul []
+renderCategoryList categories =
+  case categories of
+    Nothing ->
+      span [] [ text "Daten werden geladen ..." ]
+
+    Just xs ->
+      ul [] <| List.map (\x -> li [] [ text x ]) xs
 ```
 
 <!--s-->
