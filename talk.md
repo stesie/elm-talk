@@ -309,6 +309,18 @@ view model = div []
   ]
 ```
 
+<!--v-->
+
+```elm
+-- main
+
+main = Html.beginnerProgram
+  { model = model
+  , view = view
+  , update = update
+  }
+```
+
 <!--s-->
 # Commands & Subscriptions
 
