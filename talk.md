@@ -81,6 +81,25 @@ Nope! Elm strives for simplicity and easy entry
 * clearer syntax
 * eager evaluation
 
+<!--v-->
+## Types
+
+```elm
+type alias User =
+  { firstname : String
+  , lastname : String
+  , username : String
+  , role : Role
+  }
+```
+
+```elm
+type Role = RegularUser | Professional | Staff
+
+type Maybe a = Just a | Nothing
+type Result error value = Ok value | Err error
+```
+
 <!--s-->
 # Compiler? Helpful!?
 
