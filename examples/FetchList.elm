@@ -63,7 +63,7 @@ renderCategoryList : Maybe (List String) -> Html Msg
 renderCategoryList categories =
     case categories of
         Nothing ->
-            span [] [ text "Daten werden geladen ..." ]
+            text "Daten werden geladen ..."
 
         Just xs ->
             ul [] <| List.map (\x -> li [] [ text x ]) xs

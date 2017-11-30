@@ -51,8 +51,7 @@ view model =
     div []
         [ h1 [] [ text "Toller Zähler" ]
         , div []
-            [ span [] [ text "aktueller Stand: " ]
-            , span [] [ text <| toString model.counter ]
+            [ text <| "aktueller Stand: " ++ toString model.counter
             ]
         , button [ onClick Increment ] [ text "+" ]
         , button [ onClick Reset ] [ text "Reset!" ]

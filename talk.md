@@ -302,8 +302,7 @@ view : Model -> Html Msg
 view model = div []
   [ h1 [] [ text "Marvellous Counter" ]
   , div []
-    [ span [] [ text "Current value: " ]
-    , span [] [ text <| toString model.counter ]
+    [ text <| "current value: " ++ toString model.counter
     ]
   , button [ onClick Increment ] [ text "+" ]
   , button [ onClick Reset ] [ text "Reset!" ]
@@ -435,7 +434,7 @@ renderCategoryList : Maybe (List String) -> Html Msg
 renderCategoryList categories =
   case categories of
     Nothing ->
-      span [] [ text "Daten werden geladen ..." ]
+      text "Daten werden geladen ..."
 
     Just xs ->
       ul [] <| List.map (\x -> li [] [ text x ]) xs
