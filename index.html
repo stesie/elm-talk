@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Introduction to Elm</title>
         <link rel="stylesheet" href="./css/reveal.css">
-        <link rel="stylesheet" href="./css/theme/white.css" id="theme">
+        <link rel="stylesheet" href="./theme/custom.css" id="theme">
         <link rel="stylesheet" href="./css/highlight/solarized-light.css">
         <link rel="stylesheet" href="./css/print/paper.css" type="text/css" media="print">
 
@@ -15,7 +15,9 @@
             <div class="slides"><section  data-markdown><script type="text/template">
 # Introduction to Elm
 
-Stefan Siegl (<stefan.siegl@mayflower.de>)
+Stefan Siegl / @stesie23
+
+aka Rolf (<rolf@mayflower.de>)
 
 <aside class="notes"><p>Who of you has already used ..?</p>
 <ul>
@@ -24,7 +26,12 @@ Stefan Siegl (<stefan.siegl@mayflower.de>)
 <li>Typescript?</li>
 <li>Haskell?</li>
 </ul>
-</aside></script></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
+# Who am I?
+
+![Github Profile Screenshot](images/who-am-i.png)
+
+</script></section><section ><section data-markdown><script type="text/template">
 # What's Elm?
 
 * functional programming language
@@ -40,14 +47,7 @@ Stefan Siegl (<stefan.siegl@mayflower.de>)
 </aside></script></section><section data-markdown><script type="text/template">
 # Who's using it?
 
-* Prezi
-* NoRedInk
-* Pivotal Tracker
-* Day One
-* Microsoft
-* Mozilla
-* CircuitHub
-...?
+![Logos of PivotalTracker, noredink, Prezi, CircuitHub etc.](images/elm-users.png)
 
 <aside class="notes"><ul>
 <li>Evan was employed at Prezi beginning in 2013 and is with NoRedInk since 2016</li>
@@ -61,26 +61,51 @@ Stefan Siegl (<stefan.siegl@mayflower.de>)
 * no more *undefined is not a function*
 * good performance
 * easily testable
+* tomorrow's JavaScript already today
 
 </script></section><section data-markdown><script type="text/template">
 ## What is Elm like?
 
 * (purely) functional
 * statically typed
+* type inference
 * immutable data structures
 * syntax of ML/Haskell
 * package repo, enforcing semver
 
-</script></section><section data-markdown><script type="text/template">
+<aside class="notes"><ul>
+<li>Package repo currently has ~1100 packages</li>
+<li>fun stuff: enforced semver leads to higher version numbers :)</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
 ## Haskell!? gotta leave ...
 
 Nope! Elm strives for simplicity and easy entry
 
 * no "higher kinded types"
 * no "type classes"
-* no overloaded functions
+* no "overloaded" functions
 * clearer syntax
 * eager evaluation
+
+</script></section><section data-markdown><script type="text/template">
+## Types
+
+```elm
+type alias User =
+  { firstname : String
+  , lastname : String
+  , username : String
+  , role : Role
+  }
+```
+
+```elm
+type Role = RegularUser | Professional | Staff
+
+type Maybe a = Just a | Nothing
+type Result error value = Ok value | Err error
+```
 
 </script></section></section><section ><section data-markdown><script type="text/template">
 # Compiler? Helpful!?
@@ -207,7 +232,7 @@ main = h1 [] [ text "Hello World" ]
 
 * Elm is *purely functional*
 * ... and the code, you're going to write, is so too
-* all side-effects happen within the Runtime (!!)
+* all side-effects are encoded for and happen within the runtime (!!)
 
 </script></section><section data-markdown><script type="text/template">
 ## Elm Architecture
@@ -250,12 +275,18 @@ model =
 ```elm
 -- update
 
-type Msg = Increment | Reset
+type Msg
+  = Increment
+  | Reset
 
 update : Msg -> Model -> Model
-update msg model = case msg of
-  Increment -> { model | counter = model.counter + 1 }
-  Reset -> { model | counter = 0 }
+update msg model =
+  case msg of
+    Increment ->
+      { model | counter = model.counter + 1 }
+
+    Reset ->
+      { model | counter = 0 }
 ```
 
 </script></section><section data-markdown><script type="text/template">
@@ -267,12 +298,23 @@ view : Model -> Html Msg
 view model = div []
   [ h1 [] [ text "Marvellous Counter" ]
   , div []
-    [ span [] [ text "Current value: " ]
-    , span [] [ text <| toString model.counter ]
+    [ text <| "current value: " ++ toString model.counter
     ]
   , button [ onClick Increment ] [ text "+" ]
   , button [ onClick Reset ] [ text "Reset!" ]
   ]
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+```elm
+-- main
+
+main = Html.beginnerProgram
+  { model = model
+  , view = view
+  , update = update
+  }
 ```
 
 </script></section></section><section ><section data-markdown><script type="text/template">
@@ -287,8 +329,8 @@ view model = div []
 ## Commands
 
 * e.g. Random, HTTP requests, WebSocket connection + outbound messaging
-* solution: `init` and `update` update don't just return a `Model`, but
-  a `(Model, Cmd)`
+* solution: `init` and `update` don't just return a `Model`, but
+  a `(Model, Cmd)` tupel
 
 </script></section></section><section ><section data-markdown><script type="text/template">
 # Example II
@@ -343,11 +385,14 @@ type alias Model =
 -- update
 type Msg = NewData (Result Http.Error (List String))
 
-update : Msg -> Model -> (Model, Cmd Msg)
-update msg model = case msg of
-  NewData (Err _) -> (model, Cmd.none)
-  NewData (Ok newCategories)
-    -> (Model <| Just newCategories, Cmd.none)
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+  case msg of
+    NewData (Ok newCategories) ->
+      ( Model <| Just newCategories, Cmd.none )
+
+    NewData (Err _) ->
+      ( model, Cmd.none )
 ```
 
 </script></section><section data-markdown><script type="text/template">
@@ -360,7 +405,7 @@ decodeCategoryList: Decode.Decoder (List String)
 decodeCategoryList =
   Decode.field "resource"
     <| Decode.list
-    <| Decode.field "name" Decode.string
+      <| Decode.field "name" Decode.string
 ```
 
 </script></section><section data-markdown><script type="text/template">
@@ -380,23 +425,47 @@ fetchCategoryList =
 ```elm
 init : (Model, Cmd Msg)
 init =
-  (Model Nothing, fetchCategoryList)
+  ( Model Nothing, fetchCategoryList )
+```
+
+</script></section><section data-markdown><script type="text/template">
+## Step 5: View
+
+```elm
+view : Model -> Html Msg
+view model = div []
+  [ h1 [] [ text "Kategorie-Liste" ]
+  , renderCategoryList model.categories
+  ]
+
+renderCategoryList : Maybe (List String) -> Html Msg
+renderCategoryList categories =
+  case categories of
+    Nothing ->
+      text "Daten werden geladen ..."
+
+    Just xs ->
+      ul [] <| List.map (\x -> li [] [ text x ]) xs
 ```
 
 </script></section></section><section ><section data-markdown><script type="text/template">
 # Resources
 
+* https://elm-lang.org/try
 * https://guide.elm-lang.org/
 * https://www.elm-tutorial.org/en/
 
 * http://package.elm-lang.org/
+* https://mbylstra.github.io/html-to-elm/
+
+* https://github.com/elm-community/elm-test
 
 </script></section><section data-markdown><script type="text/template">
 # Questions?
 
 </script></section><section data-markdown><script type="text/template">
 
-Mail: stefan.siegl@mayflower.de
+Mail: rolf@mayflower.de
 
 Twitter: @stesie23
 
