@@ -55,12 +55,14 @@ Note:
 * no more *undefined is not a function*
 * good performance
 * easily testable
+* tomorrow's JavaScript already today
 
 <!--v-->
 ## What is Elm like?
 
 * (purely) functional
 * statically typed
+* type inference
 * immutable data structures
 * syntax of ML/Haskell
 * package repo, enforcing semver
@@ -234,7 +236,7 @@ main = h1 [] [ text "Hello World" ]
 
 * Elm is *purely functional*
 * ... and the code, you're going to write, is so too
-* all side-effects happen within the Runtime (!!)
+* all side-effects are encoded for and happen within the runtime (!!)
 
 <!--v-->
 ## Elm Architecture
@@ -429,10 +431,14 @@ renderCategoryList categories = case categories of
 <!--s-->
 # Resources
 
+* https://elm-lang.org/try
 * https://guide.elm-lang.org/
 * https://www.elm-tutorial.org/en/
 
 * http://package.elm-lang.org/
+* https://mbylstra.github.io/html-to-elm/
+
+* https://github.com/elm-community/elm-test
 
 <!--v-->
 # Questions?
